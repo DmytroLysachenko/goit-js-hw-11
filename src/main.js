@@ -9,17 +9,24 @@ const form = document.querySelector('.search-form');
 const input = document.querySelector('.search-input');
 const list = document.querySelector('.gallery-list');
 const loader = document.querySelector('.loader');
-console.log(form);
 
 form.addEventListener('submit', event => {
+  if (input.value.trim() === '') {
+    iziToast.show({
+      title: 'Error',
+      message: 'Invalid value',
+      backgroundColor: 'red',
+      theme: 'dark',
+      color: 'red',
+      position: 'topRight',
+    });
+  }
   loader.classList.add('is-loading');
-  console.log(loader);
   event.preventDefault();
   list.innerHTML = '';
-  const imageName = input.value;
+  const imageName = input.value.trim();
   input.value = '';
   fetchSearch(imageName).then(obj => {
-    console.log(obj);
     if (obj.length === 0) {
       iziToast.show({
         title: 'Error',
